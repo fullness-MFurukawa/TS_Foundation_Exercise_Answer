@@ -22,4 +22,7 @@ export function ex06_func(): void {
     console.log(`配列の値:${months}`);
     // 配列の長さを表示する
     console.log(`配列の長さ:${months.length}`);
+
+    const x = "Hello " + "World!";
+    console.log(x);
 }
