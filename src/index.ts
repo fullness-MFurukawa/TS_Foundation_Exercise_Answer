@@ -1,6 +1,6 @@
-// chap03フォルダのex10.jsから、ex10_func関数を読み込む
-import { ex10_func } from './chap03/ex10.js';
-// ex10_func()関数を実行する
-ex10_func();
+// chap03フォルダのex13.jsから、ex13_func関数を読み込む
+import { ex13_func } from './chap03/ex13.js';
+// ex13_func()関数を実行する
+ex13_func();
 
 
