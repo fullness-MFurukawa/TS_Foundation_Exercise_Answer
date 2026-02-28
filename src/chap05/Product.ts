@@ -1,5 +1,6 @@
 /**
  * 演習-18 クラスを作成して利用する
+ * 演習-19 GetterとSetterを利用する
  */
 
 /**
@@ -7,11 +8,11 @@
  */
 export class Product{
     // 商品Idプロパティ
-    id: string;
+    private _id: string;
     // 商品名プロパティ
-    name: string;
+    private _name: string;
     // 単価プロパティ
-    price: number;
+    private _price: number;
 
     /**
      * コンストラクタ
@@ -20,17 +21,54 @@ export class Product{
      * @param price 単価
      */
     constructor(id: string, name: string, price: number){
-        this.id = id;
-        this.name = name;
-        this.price = price;
+        this._id = id;
+        this._name = name;
+        this._price = price;
+    }
+
+    /**
+     * Getter
+     */
+    get id(): string {
+        return this._id;
+    }
+    get name(): string {
+        return this._name;
+    }
+    get price(): number {
+        return this._price;
+    }
+    /**
+     * Setter
+     */
+    set id (value: string){
+        if (value.length === 0) {
+            console.error("商品Idを設定してください。");
+            return;
+        }
+        this._id = value;    
+    }
+    set name(value: string) {
+        if (value.length === 0) {
+            console.error("商品名を設定してください。");
+            return;
+        }
+        this._name = value;
+    }
+    set price(value: number) {
+        if (value < 0) {
+            console.error("単価に負の値を設定することはできません。");
+        } else {
+            this._price = value;
+        }
     }
 
     /**
      * 商品の詳細を表示するメソッド
      */
     print(): void{
-        console.log(`商品Id:${this.id}`);
-        console.log(`商品名:${this.name}`);
-        console.log(`単価:${this.price}`);
+        console.log(`商品Id:${this._id}`);
+        console.log(`商品名:${this._name}`);
+        console.log(`単価:${this._price}`);
     }
 }
