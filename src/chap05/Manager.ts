@@ -27,6 +27,6 @@ export class Manager extends Employee {
      */
     public override calculateSalary(): number {
         // 基本給+役職手当を返す
-        return super.calculateSalary() + this._managerAllowance;
+        return this._baseSalary + this._managerAllowance;
     }
 }
