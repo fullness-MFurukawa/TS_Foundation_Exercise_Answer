@@ -1,28 +1,24 @@
-// chap05フォルダのManager.jsから、Managerクラスを読み込む
-import { Manager } from './chap05/Manager.js';
-// prompt-syncをインポートする
-import promptSync from 'prompt-sync';
-// ユーザー入力を受け取るための準備(sigint: trueはCtrl+C で終了できるようにする設定）
-const prompt = promptSync({ sigint: true });
+import { EmailService } from "./chap05/EmailService.js";
+import type { Sendable } from "./chap05/Sendable.js";
+import { SmsService } from "./chap05/SmsService.js";
 
-// キー入力された値を取得する
-const id = prompt("従業員Idを入力してください->");
-// キー入力された値を取得する
-const name = prompt("従業員名を入力してください->");
-// キー入力された値を取得する
-const basicSalary = parseInt(prompt("基本給を入力してください->"));
-// キー入力された値を取得する
-const managerAllowance = parseInt(prompt("役職手当を入力してください->"));
+/**
+ * 通知を実行する共通関数
+ * 引数の型を「Sendable」にすることで、メールかSMSかを気にせず「送る」ことができる
+ */
+function notify(target: Sendable, msg: string): void {
+    console.log("--- システム通知を開始します ---");
+    target.send(msg); // ここがインターフェース（多態性）の真骨頂！
+}
 
-// 従業員クラスのインスタンスを生成する
-const manager = new Manager(id, name, basicSalary, managerAllowance);
-// 業務を行うメソッドを実行する
-manager.work();
-//  給与を計算するメソッド
-const salary = manager.calculateSalary();
-// 給与を通貨形式に変換する
-const amount = new Intl.NumberFormat('ja-JP', {
-    style: 'currency',
-    currency: 'JPY'
-}).format(salary);
-console.log(`${manager.name}さんの基本給は${amount}です。`);
+const myEmail = new EmailService("tanaka@example.com");
+const mySms = new SmsService("090-1234-5678");
+
+// メールで通知
+notify(myEmail, "サーバーが再起動されました。");
+myEmail.showLog(); // EmailServiceはログ機能も持っている
+
+console.log("--------------------------------");
+
+// SMSで通知
+notify(mySms, "緊急：ログイン試行を検知しました。");
