@@ -1,21 +1,28 @@
-// chap05フォルダのProduct.jsから、Productクラスを読み込む
-import { Product } from './chap05/Product.js';
+// chap05フォルダのManager.jsから、Managerクラスを読み込む
+import { Manager } from './chap05/Manager.js';
 // prompt-syncをインポートする
 import promptSync from 'prompt-sync';
 // ユーザー入力を受け取るための準備(sigint: trueはCtrl+C で終了できるようにする設定）
 const prompt = promptSync({ sigint: true });
 
-
-// 商品を表すクラスのインスタンスを生成する
-let product: Product = new Product("0", "商品名無し" , 0);
-
 // キー入力された値を取得する
-product.id = prompt("商品Idを入力してください->");
+const id = prompt("従業員Idを入力してください->");
 // キー入力された値を取得する
-product.name = prompt("商品名を入力してください->");
+const name = prompt("従業員名を入力してください->");
 // キー入力された値を取得する
-let price: string = prompt("単価を入力してください->");
-product.price= parseInt(price);
+const basicSalary = parseInt(prompt("基本給を入力してください->"));
+// キー入力された値を取得する
+const managerAllowance = parseInt(prompt("役職手当を入力してください->"));
 
-// print()メソッドを実行する
-product.print();
+// 従業員クラスのインスタンスを生成する
+const manager = new Manager(id, name, basicSalary, managerAllowance);
+// 業務を行うメソッドを実行する
+manager.work();
+//  給与を計算するメソッド
+const salary = manager.calculateSalary();
+// 給与を通貨形式に変換する
+const amount = new Intl.NumberFormat('ja-JP', {
+    style: 'currency',
+    currency: 'JPY'
+}).format(salary);
+console.log(`${manager.name}さんの基本給は${amount}です。`);
